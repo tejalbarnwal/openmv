@@ -10,4 +10,4 @@
 #define __ULAB_CONFIG_H__
 // Override ulab defaults here.
 #endif //__ULAB_CONFIG_H__
-#define ULAB_MAX_DIMS                       2
+#define ULAB_MAX_DIMS       3
