@@ -60,7 +60,7 @@ STATIC void py_tf_model_print(const mp_print_t *print, mp_obj_t self_in, mp_prin
               (double) self->params.output_scale, self->params.output_zero_point);
 }
 
-STATIC mp_obj_t py_tf_model_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
+STATIC mp_obj_t py_tf_model_print_teju(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
 {
     py_tf_model_obj_t *self = self_in;
     mp_printf(print,
