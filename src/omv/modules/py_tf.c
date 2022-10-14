@@ -60,6 +60,26 @@ STATIC void py_tf_model_print(const mp_print_t *print, mp_obj_t self_in, mp_prin
               (double) self->params.output_scale, self->params.output_zero_point);
 }
 
+STATIC mp_obj_t py_tf_model_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
+{
+    py_tf_model_obj_t *self = self_in;
+    mp_printf(print,
+              "{\"len\":%d, \"ram\":%d, "
+              "\"input_height\":%d, \"input_width\":%d, \"input_channels\":%d, \"input_datatype\":\"%s\", "
+              "\"input_scale\":%f, \"input_zero_point\":%d, "
+              "\"output_height\":%d, \"output_width\":%d, \"output_channels\":%d, \"output_datatype\":\"%s\", "
+              "\"output_scale\":%f, \"output_zero_point\":%d}",
+              self->model_data_len, self->params.tensor_arena_size,
+              self->params.input_height, self->params.input_width, self->params.input_channels,
+              py_tf_map_datatype(self->params.input_datatype),
+              (double) self->params.input_scale, self->params.input_zero_point,
+              self->params.output_height, self->params.output_width, self->params.output_channels,
+              py_tf_map_datatype(self->params.output_datatype),
+              (double) self->params.output_scale, self->params.output_zero_point);
+    return 0;
+}
+
+
 // TF Classification Object
 #define py_tf_classification_obj_size 5
 typedef struct py_tf_classification_obj {
