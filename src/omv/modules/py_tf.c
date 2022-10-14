@@ -78,7 +78,7 @@ STATIC mp_obj_t py_tf_model_print_teju(const mp_print_t *print, mp_obj_t self_in
               (double) self->params.output_scale, self->params.output_zero_point);
     return 0;
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_model_print_teju_obj, 2, py_tf_model_print_teju);
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(py_tf_model_print_teju_obj, 2, py_tf_model_print_teju);
 
 
 // TF Classification Object
