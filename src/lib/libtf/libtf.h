@@ -6,6 +6,7 @@
 #ifndef __LIBTF_H
 #define __LIBTF_H
 
+#include "tensorflow/lite/c/common.h"
 #define LIBTF_TENSOR_ARENA_ALIGNMENT 16
 
 #ifdef __cplusplus
