@@ -272,6 +272,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
 
     int size = (params->input_width * params->input_height) - 1;
     // int hi = arg->input_list->len;
+    printf("size of the input:%d \n", size);
 
     if(params->input_channels == 1) {
         if (params->input_datatype == LIBTF_DATATYPE_INT8) {
@@ -284,7 +285,8 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
                 // float temp = (float)(arg->input_list->items[size]);
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
                 // printf( "%d \n", (int)temp);
-                // printf( "%d \t", (int)((temp / input_scale) + input_zero_point) );
+                printf( "%d \t", (int)((temp / input_scale) + input_zero_point) );
+                printf("\n")
                 model_input_i64[size] = (temp / input_scale) + input_zero_point;
             }
         }
