@@ -287,6 +287,36 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
 }
 
 
+typedef struct py_tf_regression_output_data_callback_data{
+    mp_obj_t out;
+} py_tf_regression_output_data_callback_data_t;
+
+
+STATIC void py_tf_regression_output_callback(void *callback_data,
+                                            void *model_output,
+                                            libtf_parameters_t *params)
+{
+    py_tf_regression_output_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
+
+    if (params->output_height != 1) {
+        mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Expected model output height to be 1!"));
+    }
+
+    if (params->output_width != 1) {
+        mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Expected model output width to be 1!"));
+    }
+
+    arg->out = mp_obj_new_list(params->output_channels, NULL);
+
+    if (params->output_datatype == LIBTF_DATATYPE_INT8) {
+        for (int i = 0, ii = params->output_channels; i < ii; i++) {
+                ((mp_obj_list_t *) arg->out)->items[i] =
+                    mp_obj_new_float( ((float) (((int8_t *) model_output)[i] - params->output_zero_point)) * params->output_scale);
+        }
+    }
+
+}
+
 
 
 
