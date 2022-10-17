@@ -270,7 +270,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
 {
     py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
 
-    int size = (params->input_width * params->input_height) - 1;
+    int size = (params->input_width * params->input_height);
     // int hi = arg->input_list->len;
     printf("size of the input:%d \n", size);
 
@@ -282,18 +282,18 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
             int input_zero_point = params->input_zero_point;
 
             printf("temp values\n");
-            for(; size >= 0; size -=1){
-                mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
+            for(int i; i < size; i +=1){
+                mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
                 printf( "%d \t", (int)temp);
             }
-            
+
             printf("temp with scaling and zero point \n");
-            for(; size >= 0; size -=1){
+            for(int i; i < size; i +=1){
                 // float temp = (float)(arg->input_list->items[size]);
-                mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
+                mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
                 // printf( "%d \n", (int)temp);
                 printf( "%d \t", (int)((temp / input_scale) + input_zero_point) );
-                model_input_i64[size] = (temp / input_scale) + input_zero_point;
+                model_input_i64[i] = (temp / input_scale) + input_zero_point;
             }
             printf("\n");
         }
