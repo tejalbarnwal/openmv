@@ -254,6 +254,39 @@ STATIC py_tf_model_obj_t *py_tf_load_alloc(mp_obj_t path_obj)
     }
 }
 
+
+// Author: teju
+// regression start
+
+// define regression input type as list (currently only accepting 1D input)
+typedef struct py_tf_regression_input_data_callback_data{
+    mp_obj_list_t *input_list;
+} py_tf_regression_input_data_callback_data_t;
+
+STATIC void py_tf_regression_input_callback(void *callback_data,
+                                            void *model_input,
+                                            libtf_parameters_t *params)
+{
+    py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t) callback_data;
+
+    int size = (params->input_width * params->input_height) - 1;
+
+    if(params->input_channels == 1){
+        (params->input_datatype == LIBTF_DATATYPE_INT8){
+            for(; size >= 0; size -=1){
+                model_input[i] = arg->input_list->items[size]
+            }
+        }
+    }
+}
+
+
+
+
+
+// regression end
+
+
 typedef struct py_tf_input_data_callback_data {
     image_t *img;
     rectangle_t *roi;
