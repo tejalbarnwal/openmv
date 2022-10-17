@@ -333,7 +333,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     printf("read oth arg \n");
 
     printf("printing arg 1: \t");
-    printf("%d \n", (int)arg[1]);
+    printf("%d \n", (int)args[1]);
 
     mp_obj_list_t *arg_list = args[2];
     printf("read into arg list from arg 2 \n");
