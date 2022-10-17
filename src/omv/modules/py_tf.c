@@ -283,7 +283,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
             for(; size >= 0; size -=1){
                 // float temp = (float)(arg->input_list->items[size]);
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
-                printf( "%d \t", (int)temp);
+                // printf( "%d \n", (int)temp);
                 // printf( "%d \t", (int)((temp / input_scale) + input_zero_point) );
                 model_input_i64[size] = (temp / input_scale) + input_zero_point;
             }
@@ -330,13 +330,17 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
 
     py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
 
-    printf("read oth arg");
+    printf("read oth arg \n");
 
-    mp_obj_list_t *arg_list = args[1];
-    printf("read 1sth arg");
+    printf("printing arg 1: \t")
+    printf("%d \n", (int)arg[1])
+
+    mp_obj_list_t *arg_list = args[2];
+    printf("read into arg list from arg 2 \n");
     for (size_t i = 0; i < arg_list->len; i++) {
         printf( "%d \t", (int) mp_obj_float_get(arg_list->items[i]));
     }
+    printf("\n printed arg 2 \n");
 
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
 
