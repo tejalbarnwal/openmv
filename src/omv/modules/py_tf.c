@@ -276,11 +276,13 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
         if (params->input_datatype == LIBTF_DATATYPE_INT8) {
 
             int64_t *model_input_i64 = (int64_t *) model_input;
+            float input_scale = params->input_scale;
+            int input_zero_point = params->input_zero_point;
             
             for(; size >= 0; size -=1){
                 // float temp = (float)(arg->input_list->items[size]);
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
-                model_input_i64[size] = temp;
+                model_input_i64[size] = (temp / input_scale) + input_zero_point;
             }
         }
     }
