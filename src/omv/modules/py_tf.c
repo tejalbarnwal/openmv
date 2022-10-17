@@ -286,7 +286,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[size]);
                 // printf( "%d \n", (int)temp);
                 printf( "%d \t", (int)((temp / input_scale) + input_zero_point) );
-                printf("\n")
+                printf("\n");
                 model_input_i64[size] = (temp / input_scale) + input_zero_point;
             }
         }
