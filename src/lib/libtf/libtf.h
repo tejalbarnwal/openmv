@@ -20,10 +20,12 @@ typedef enum libtf_datatype {
 
 typedef struct libtf_parameters {
     size_t tensor_arena_size;
+
     size_t input_height, input_width, input_channels;
     libtf_datatype_t input_datatype;
     float input_scale;
     int input_zero_point;
+    
     size_t output_height, output_width, output_channels;
     libtf_datatype_t output_datatype;
     float output_scale;
