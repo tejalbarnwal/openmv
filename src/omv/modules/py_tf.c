@@ -270,6 +270,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
     py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
 
     int size = (params->input_width * params->input_height) - 1;
+    int hi = arg->input_list->len;
 
     if(params->input_channels == 1) {
         if (params->input_datatype == LIBTF_DATATYPE_INT8) {
