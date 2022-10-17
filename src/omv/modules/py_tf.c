@@ -325,9 +325,9 @@ STATIC void py_tf_regression_output_callback(void *callback_data,
     if (params->output_datatype == LIBTF_DATATYPE_INT8) {
         for (int i = 0, ii = params->output_channels; i < ii; i++) {
 
-            mp_float_t temp = mp_obj_float_get( ((float) (((int8_t *) model_output)[i])));
+            mp_float_t temp = mp_obj_new_float( ((float) (((int8_t *) model_output)[i] - params->output_zero_point)) * params->output_scale);
             printf( "raw output %d \t", (int)temp);
-            printf( "scaled zeroed output %d \t", (int)((temp - params->output_zero_point) * params->output_scale) );
+            // printf( "scaled zeroed output %d \t", (int)((temp - params->output_zero_point) * params->output_scale) );
 
             ((mp_obj_list_t *) arg->out)->items[i] =
                     mp_obj_new_float( ((float) (((int8_t *) model_output)[i] - params->output_zero_point)) * params->output_scale);
