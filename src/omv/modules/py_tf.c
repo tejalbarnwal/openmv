@@ -330,7 +330,10 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
 
     py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
 
+    printf("read oth arg");
+
     mp_obj_list_t *arg_list = args[1];
+    printf("read 1sth arg");
     for (size_t i = 0; i < arg_list->len; i++) {
         printf( "%d \t", (int) mp_obj_float_get(arg_list->items[i]));
     }
