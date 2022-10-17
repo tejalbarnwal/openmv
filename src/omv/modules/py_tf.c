@@ -277,8 +277,8 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
             int64_t *model_input_i64 = (int64_t *) model_input;
             
             for(; size >= 0; size -=1){
-                int temp = mp_obj_new_int( ((int)(arg->input_list->items[size])) );
-                model_input_i64[size] = temp;
+                float temp = (float)(arg->input_list->items[size]);
+                // model_input_i64[size] = temp;
             }
         }
     }
