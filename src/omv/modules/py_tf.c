@@ -271,8 +271,8 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
 
     int size = (params->input_width * params->input_height) - 1;
 
-    if(params->input_channels == 1){
-        (params->input_datatype == LIBTF_DATATYPE_INT8){
+    if(params->input_channels == 1) {
+        if (params->input_datatype == LIBTF_DATATYPE_INT8) {
             for(; size >= 0; size -=1){
                 model_input[i] = arg->input_list->items[size]
             }
