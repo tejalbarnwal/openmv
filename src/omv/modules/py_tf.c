@@ -267,7 +267,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
                                             void *model_input,
                                             libtf_parameters_t *params)
 {
-    py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t) callback_data;
+    py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
 
     int size = (params->input_width * params->input_height) - 1;
 
