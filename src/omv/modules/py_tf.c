@@ -331,6 +331,9 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
 
     mp_obj_list_t *arg_list = args[1];
+    for (size_t i = 0; i < arg_list->len; i++) {
+        printf( "%d \t", mp_obj_int_get(arg_list->items[i]));
+    }
 
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
 
