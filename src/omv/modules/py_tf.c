@@ -296,7 +296,7 @@ STATIC void py_tf_regression_output_callback(void *callback_data,
                                             void *model_output,
                                             libtf_parameters_t *params)
 {
-    py_tf_regression_output_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
+    py_tf_regression_output_data_callback_data_t *arg = (py_tf_regression_output_data_callback_data_t *) callback_data;
 
     if (params->output_height != 1) {
         mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Expected model output height to be 1!"));
