@@ -318,6 +318,43 @@ STATIC void py_tf_regression_output_callback(void *callback_data,
 }
 
 
+STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
+{
+    fb_alloc_mark();
+    py_tf_alloc_putchar_buffer();
+
+    py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
+
+    mp_obj_list_t *arg_list = args[1];
+
+    uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
+
+    mp_obj_t output_list = mp_obj_new_list(0, NULL);
+
+    py_tf_regression_input_data_callback_data_t py_tf_regression_input_data;
+    py_tf_regression_input_data.input_list = arg_list;
+
+    py_tf_regression_output_data_callback_data_t py_tf_regression_output_data;
+
+    if (libtf_invoke(arg_model->model_data,
+                            tensor_arena,
+                            &arg_model->params,
+                            py_tf_regression_input_callback,
+                            &py_tf_regression_input_data,
+                            py_tf_regression_output_callback,
+                            &py_tf_regression_output_data) != 0) {
+                        // Note can't use MP_ERROR_TEXT here.
+        mp_raise_msg(&mp_type_OSError, (mp_rom_error_text_t) py_tf_putchar_buffer);
+    }
+
+    output_list = py_tf_regression_output_data.out;
+
+    fb_alloc_free_till_mark();
+    return output_list;
+}
+
+
+
 
 
 // regression end
