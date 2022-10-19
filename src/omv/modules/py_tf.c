@@ -272,7 +272,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
 
     int size = (params->input_width * params->input_height);
     // int hi = arg->input_list->len;
-    printf("size of the input:%d \n", size);
+    printf("size of the input: %d \n", size);
 
     if(params->input_channels == 1) {
         if (params->input_datatype == LIBTF_DATATYPE_INT8) {
@@ -297,7 +297,8 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
                 model_input_i64[i] = (temp / input_scale) + input_zero_point;
             }
             printf("\n");
-            printf( "%d \n", (int)model_input_i64[0]);
+            printf( "model input i64: %d \n", (int)model_input_i64[0]);
+            printf( "model input: %d \n", (int)model_input[0]);
             // printf("input values in the model input: \t");
             // for(int i = 0; i < size; i +=1){
             //     mp_float_t temp = mp_obj_float_get(model_input_i64[i]);
@@ -333,10 +334,10 @@ STATIC void py_tf_regression_output_callback(void *callback_data,
     if (params->output_datatype == LIBTF_DATATYPE_INT8) {
         for (int i = 0, ii = params->output_channels; i < ii; i++) {
 
-            int temp = (int) (((int8_t *) model_output)[i]);
-            printf( "raw output %d \t", (int)temp);
+            mp_float_t temp = (float) (((float *) model_output)[i]);
+            printf( "raw output %.1f \n", (double)temp);
             mp_float_t up_temp = (float) ( (temp - params->output_zero_point) * params->output_scale);
-            printf( "scaled zeroed output %.1f \t", (double)up_temp);
+            printf( "scaled zeroed output %.1f \n", (double)up_temp);
 
             ((mp_obj_list_t *) arg->out)->items[i] =
                     mp_obj_new_float( ((float) (((int8_t *) model_output)[i] - params->output_zero_point)) * params->output_scale);
@@ -359,11 +360,11 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     printf("%d \n", (int)mp_obj_float_get(args[1]));
 
     mp_obj_list_t *arg_list = args[2];
-    printf("read into arg list from arg 2 \n");
+    printf("read into arg list from arg 2: \t");
     for (size_t i = 0; i < arg_list->len; i++) {
         printf( "%d \t", (int) mp_obj_float_get(arg_list->items[i]));
     }
-    printf("\n printed arg 2 \n");
+    printf("\n");
 
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
 
