@@ -281,13 +281,13 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
             float input_scale = params->input_scale;
             int input_zero_point = params->input_zero_point;
 
-            printf("temp values\n");
+            printf("input values in the callback\n");
             for(int i = 0; i < size; i +=1){
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
                 printf( "%d \t", (int)temp);
             }
 
-            printf("temp with scaling and zero point \n");
+            printf("input values in the callback with scaling and zero point \n");
             for(int i = 0; i < size; i +=1){
                 // float temp = (float)(arg->input_list->items[size]);
                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
