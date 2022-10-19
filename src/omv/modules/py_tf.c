@@ -22,6 +22,7 @@
 #include "ff_wrapper.h"
 #include "py_tf.h"
 #include "libtf_builtin_models.h"
+#include "tensorflow/lite/c/common.h"
 #define GRAYSCALE_RANGE ((COLOR_GRAYSCALE_MAX) - (COLOR_GRAYSCALE_MIN))
 #define GRAYSCALE_MID   (((GRAYSCALE_RANGE) + 1) / 2)
 
