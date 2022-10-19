@@ -298,7 +298,7 @@ STATIC void py_tf_regression_input_callback(void *callback_data,
             }
             printf("\n");
             printf( "model input i64: %d \n", (int)model_input_i64[0]);
-            printf( "model input: %d \n", (int)((float *)model_input[0]));
+            printf( "model input: %.1f \n", (float)(((float *)model_input)[0]));
             // printf("input values in the model input: \t");
             // for(int i = 0; i < size; i +=1){
             //     mp_float_t temp = mp_obj_float_get(model_input_i64[i]);
