@@ -398,6 +398,16 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_regression_obj, 2, py_tf_regression);
 
 // regression end
 
+// small test start
+
+STATIC mp_obj_t py_tf_teju_small_test()
+{
+    int i = libtf_teju_test_invoke();
+    return i;
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_0(py_tf_teju_small_test_obj, 0, py_tf_teju_small_test);
+// small test end
+
 
 typedef struct py_tf_input_data_callback_data {
     image_t *img;
@@ -934,7 +944,8 @@ STATIC const mp_rom_map_elem_t locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_classify),            MP_ROM_PTR(&py_tf_classify_obj) },
     { MP_ROM_QSTR(MP_QSTR_segment),             MP_ROM_PTR(&py_tf_segment_obj) },
     { MP_ROM_QSTR(MP_QSTR_detect),              MP_ROM_PTR(&py_tf_detect_obj) },
-    { MP_ROM_QSTR(MP_QSTR_regression),          MP_ROM_PTR(&py_tf_regression_obj) }
+    { MP_ROM_QSTR(MP_QSTR_regression),          MP_ROM_PTR(&py_tf_regression_obj) },
+    { MP_ROM_QSTR(MP_QSTR_small_test),          MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 };
 
 STATIC MP_DEFINE_CONST_DICT(locals_dict, locals_dict_table);
@@ -970,6 +981,7 @@ STATIC const mp_rom_map_elem_t globals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_output_scale),        MP_ROM_PTR(&py_tf_output_scale_obj) },
     { MP_ROM_QSTR(MP_QSTR_output_zero_point),   MP_ROM_PTR(&py_tf_output_zero_point_obj) },
     { MP_ROM_QSTR(MP_QSTR_regression),          MP_ROM_PTR(&py_tf_regression_obj) }
+    { MP_ROM_QSTR(MP_QSTR_small_test),          MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 #else
     { MP_ROM_QSTR(MP_QSTR_load),                MP_ROM_PTR(&py_func_unavailable_obj) },
     { MP_ROM_QSTR(MP_QSTR_load_builtin_model),  MP_ROM_PTR(&py_func_unavailable_obj) },
