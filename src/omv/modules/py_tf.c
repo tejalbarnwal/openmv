@@ -404,9 +404,9 @@ STATIC mp_obj_t py_tf_teju_small_test()
 {   
     fb_alloc_mark();
     py_tf_alloc_putchar_buffer();
-    printf("lets goo");
+    printf("lets goo\n");
     if (libtf_teju_test_invoke() != 0){
-        printf("something is wrong");
+        printf("something is wrong\n");
     }
     // mp_float_t temp = mp_obj_float_get(0.3);
     mp_obj_t output_list = mp_obj_new_list(0, NULL);
