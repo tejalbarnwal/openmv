@@ -398,23 +398,23 @@ STATIC py_tf_model_obj_t *py_tf_load_alloc(mp_obj_t path_obj)
 
 // // regression end
 
-// // small test start
+// small test start
 
-// STATIC mp_obj_t py_tf_teju_small_test()
-// {   
-//     fb_alloc_mark();
-//     py_tf_alloc_putchar_buffer();
-//     printf("lets goo\n");
+STATIC mp_obj_t py_tf_teju()
+{   
+    fb_alloc_mark();
+    py_tf_alloc_putchar_buffer();
+    printf("lets goo\n");
     
-//     if (libtf_teju_test_invoke() != 0){
-//         printf("something is wrong\n");
-//     }
-//     // mp_float_t temp = mp_obj_float_get(0.3);
-//     mp_obj_t output_list = mp_obj_new_list(0, NULL);
-//     fb_alloc_free_till_mark();
-//     return output_list;
-// }
-// STATIC MP_DEFINE_CONST_FUN_OBJ_0(py_tf_teju_small_test_obj, py_tf_teju_small_test);
+    if (libtf_teju() != 0){
+        printf("something is wrong\n");
+    }
+    // mp_float_t temp = mp_obj_float_get(0.3);
+    mp_obj_t output_list = mp_obj_new_list(0, NULL);
+    fb_alloc_free_till_mark();
+    return output_list;
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_0(py_tf_teju_obj, py_tf_teju);
 // small test end
 
 
@@ -952,8 +952,8 @@ STATIC const mp_rom_map_elem_t locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_output_zero_point),   MP_ROM_PTR(&py_tf_output_zero_point_obj) },
     { MP_ROM_QSTR(MP_QSTR_classify),            MP_ROM_PTR(&py_tf_classify_obj) },
     { MP_ROM_QSTR(MP_QSTR_segment),             MP_ROM_PTR(&py_tf_segment_obj) },
-    { MP_ROM_QSTR(MP_QSTR_detect),              MP_ROM_PTR(&py_tf_detect_obj) }
-    // { MP_ROM_QSTR(MP_QSTR_regression),          MP_ROM_PTR(&py_tf_regression_obj) },
+    { MP_ROM_QSTR(MP_QSTR_detect),              MP_ROM_PTR(&py_tf_detect_obj) },
+    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) }
     // { MP_ROM_QSTR(MP_QSTR_teju_small_test),     MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 };
 
@@ -988,8 +988,8 @@ STATIC const mp_rom_map_elem_t globals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_output_channels),     MP_ROM_PTR(&py_tf_output_channels_obj) },
     { MP_ROM_QSTR(MP_QSTR_output_datatype),     MP_ROM_PTR(&py_tf_output_datatype_obj) },
     { MP_ROM_QSTR(MP_QSTR_output_scale),        MP_ROM_PTR(&py_tf_output_scale_obj) },
-    { MP_ROM_QSTR(MP_QSTR_output_zero_point),   MP_ROM_PTR(&py_tf_output_zero_point_obj) }
-    // { MP_ROM_QSTR(MP_QSTR_regression),          MP_ROM_PTR(&py_tf_regression_obj) },
+    { MP_ROM_QSTR(MP_QSTR_output_zero_point),   MP_ROM_PTR(&py_tf_output_zero_point_obj) },
+    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) }
     // { MP_ROM_QSTR(MP_QSTR_teju_small_test),     MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 #else
     { MP_ROM_QSTR(MP_QSTR_load),                MP_ROM_PTR(&py_func_unavailable_obj) },
