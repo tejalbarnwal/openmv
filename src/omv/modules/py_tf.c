@@ -405,6 +405,7 @@ STATIC mp_obj_t py_tf_teju_small_test()
     fb_alloc_mark();
     py_tf_alloc_putchar_buffer();
     printf("lets goo\n");
+    
     if (libtf_teju_test_invoke() != 0){
         printf("something is wrong\n");
     }
