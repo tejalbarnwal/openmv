@@ -400,12 +400,12 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_regression_obj, 2, py_tf_regression);
 
 // small test start
 
-STATIC mp_obj_t py_tf_teju_small_test()
+STATIC mp_obj_t py_tf_teju_small_test(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
 {
     int i = libtf_teju_test_invoke();
     return i;
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_0(py_tf_teju_small_test_obj, 0, py_tf_teju_small_test);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_teju_small_test_obj, 2, py_tf_teju_small_test);
 // small test end
 
 
