@@ -73,7 +73,7 @@ int libtf_generate_micro_features(const int16_t *input, // Audio samples
                                   size_t *num_samples_read); // Number of samples used
 
 
-int libtf_teju();
+int libtf_teju(const unsigned char *model_data);
 
 #ifdef __cplusplus
 }
