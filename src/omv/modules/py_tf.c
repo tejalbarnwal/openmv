@@ -21,7 +21,7 @@
 #include "py_image.h"
 #include "ff_wrapper.h"
 #include "py_tf.h"
-// #include "libtf_builtin_models.h"
+#include "libtf_builtin_models.h"
 // #include "tensorflow/lite/c/common.h"
 
 
