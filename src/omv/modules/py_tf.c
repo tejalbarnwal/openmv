@@ -400,12 +400,12 @@ STATIC py_tf_model_obj_t *py_tf_load_alloc(mp_obj_t path_obj)
 
 // small test start
 
-STATIC mp_obj_t py_tf_teju(mp_obj_t *arg)
+STATIC mp_obj_t py_tf_teju(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
 {   
     fb_alloc_mark();
     py_tf_alloc_putchar_buffer();
 
-    py_tf_model_obj_t *arg_model = py_tf_load_alloc(arg);
+    py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
 
     printf("lets goo\n");
     
@@ -417,7 +417,7 @@ STATIC mp_obj_t py_tf_teju(mp_obj_t *arg)
     fb_alloc_free_till_mark();
     return output_list;
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_1(py_tf_teju_obj, py_tf_teju);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_teju_obj, 1, py_tf_teju);
 // small test end
 
 
