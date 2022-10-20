@@ -21,7 +21,7 @@
 #include "py_image.h"
 #include "ff_wrapper.h"
 #include "py_tf.h"
-#include "libtf_builtin_models.h"
+// #include "libtf_builtin_models.h"
 // #include "tensorflow/lite/c/common.h"
 
 
@@ -401,13 +401,16 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_regression_obj, 2, py_tf_regression);
 // small test start
 
 STATIC mp_obj_t py_tf_teju_small_test()
-{
+{   
+    fb_alloc_mark();
+    py_tf_alloc_putchar_buffer();
     printf("lets goo");
     if (libtf_teju_test_invoke() != 0){
         printf("something is wrong");
     }
     // mp_float_t temp = mp_obj_float_get(0.3);
     mp_obj_t output_list = mp_obj_new_list(0, NULL);
+    fb_alloc_free_till_mark();
     return output_list;
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_0(py_tf_teju_small_test_obj, py_tf_teju_small_test);
