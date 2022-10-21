@@ -75,6 +75,9 @@ int libtf_generate_micro_features(const int16_t *input, // Audio samples
 
 int libtf_teju(const unsigned char *model_data);
 
+
+int libtf_tejuinput(const unsigned char *model_data, float *x);
+
 #ifdef __cplusplus
 }
 #endif

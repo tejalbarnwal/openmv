@@ -418,6 +418,37 @@ STATIC mp_obj_t py_tf_teju(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
     return output_list;
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_teju_obj, 1, py_tf_teju);
+
+STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
+{
+    fb_alloc_mark();
+    py_tf_alloc_putchar_buffer();
+
+    py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
+
+    printf("model read!\n");
+
+    float arr[36];
+    mp_obj_list_t *arg_list = args[1];
+    for(size_t i =0; i < arg_list->len; i++){
+        arr[i] = (float) mp_obj_float_get(arg_list->items[i]);
+    }
+
+    printf("input arr ready\n");
+
+    if (libtf_tejuinput(arg_model->model_data, arr) != 0){
+        printf("somethings fishy\n");
+    }
+
+    mp_obt_t out = mp_obj_new_list(0, NULL);
+    fb_alloc_free_till_mark();
+    return out;
+
+
+    // if (libtf_tejuinput())
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_tejuinput_obj, 2, py_tf_tejuinput);
+
 // small test end
 
 
@@ -956,7 +987,8 @@ STATIC const mp_rom_map_elem_t locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_classify),            MP_ROM_PTR(&py_tf_classify_obj) },
     { MP_ROM_QSTR(MP_QSTR_segment),             MP_ROM_PTR(&py_tf_segment_obj) },
     { MP_ROM_QSTR(MP_QSTR_detect),              MP_ROM_PTR(&py_tf_detect_obj) },
-    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) }
+    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) },
+    { MP_ROM_QSTR(MP_QSTR_tejuinput),           MP_ROM_PTR(&py_tf_tejuinput_obj) }
     // { MP_ROM_QSTR(MP_QSTR_teju_small_test),     MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 };
 
@@ -992,7 +1024,8 @@ STATIC const mp_rom_map_elem_t globals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_output_datatype),     MP_ROM_PTR(&py_tf_output_datatype_obj) },
     { MP_ROM_QSTR(MP_QSTR_output_scale),        MP_ROM_PTR(&py_tf_output_scale_obj) },
     { MP_ROM_QSTR(MP_QSTR_output_zero_point),   MP_ROM_PTR(&py_tf_output_zero_point_obj) },
-    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) }
+    { MP_ROM_QSTR(MP_QSTR_teju),                MP_ROM_PTR(&py_tf_teju_obj) },
+    { MP_ROM_QSTR(MP_QSTR_tejuinput),           MP_ROM_PTR(&py_tf_tejuinput_obj) }
     // { MP_ROM_QSTR(MP_QSTR_teju_small_test),     MP_ROM_PTR(&py_tf_teju_small_test_obj) }
 #else
     { MP_ROM_QSTR(MP_QSTR_load),                MP_ROM_PTR(&py_func_unavailable_obj) },
