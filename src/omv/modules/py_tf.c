@@ -440,7 +440,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
         printf("somethings fishy\n");
     }
 
-    mp_obt_t out = mp_obj_new_list(0, NULL);
+    mp_obj_t out = mp_obj_new_list(0, NULL);
     fb_alloc_free_till_mark();
     return out;
 
