@@ -14,6 +14,7 @@
 #include "py/objlist.h"
 #include "py/objtuple.h"
 
+
 #include "py_helper.h"
 #include "imlib_config.h"
 
@@ -23,6 +24,8 @@
 #include "py_tf.h"
 #include "libtf_builtin_models.h"
 // #include "tensorflow/lite/c/common.h"
+
+#include "py/objarray.h"
 
 
 #define GRAYSCALE_RANGE ((COLOR_GRAYSCALE_MAX) - (COLOR_GRAYSCALE_MIN))
@@ -429,21 +432,26 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     printf("model read!\n");
 
     
-    mp_obj_list_t *arg_list = args[1];
-    float arr[arg_list->len];
+    // mp_obj_list_t *arg_list = args[1];
+    // float arr[arg_list->len];
+    // for(size_t i =0; i < arg_list->len; i++){
+    //     arr[i] = (float) mp_obj_float_get(arg_list->items[i]);
+    // }
+
+    mp_obj_array_t *arg_array = args[1];
+    float arr[arg_array->len];
     for(size_t i =0; i < arg_list->len; i++){
-        // printf("original \n");
-        // printf("%f \n", (double) mp_obj_float_get(arg_list->items[i]));
-        arr[i] = (float) mp_obj_float_get(arg_list->items[i]);
-        // printf("intoarr \n");
-        // printf("%f \n", (double) arr[i]);
+        arr[i] = mp_binary_get_val_array(arg_array->typecode, arg_array->items, i);
     }
+    printf("arr created from list");
+    
+
 
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
 
     printf("input arr ready\n");
 
-    if (libtf_tejuinput(arg_model->model_data, arr, arg_list->len, tensor_arena, &arg_model->params) != 0){
+    if (libtf_tejuinput(arg_model->model_data, arr, arg_array->len, tensor_arena, &arg_model->params) != 0){
         printf("somethings fishy\n");
     }
 
