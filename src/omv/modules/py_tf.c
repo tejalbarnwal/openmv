@@ -440,7 +440,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
 
     printf("input arr ready\n");
 
-    if (libtf_tejuinput(arg_model->model_data, arr) != 0){
+    if (libtf_tejuinput(arg_model->model_data, arr, arg_list->len) != 0){
         printf("somethings fishy\n");
     }
 
