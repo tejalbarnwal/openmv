@@ -431,11 +431,11 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     float arr[36];
     mp_obj_list_t *arg_list = args[1];
     for(size_t i =0; i < arg_list->len; i++){
-        printf("original \n");
-        printf("%f \n", (double) mp_obj_float_get(arg_list->items[i]));
+        // printf("original \n");
+        // printf("%f \n", (double) mp_obj_float_get(arg_list->items[i]));
         arr[i] = (float) mp_obj_float_get(arg_list->items[i]);
-        printf("intoarr \n");
-        printf("%f \n", (double) arr[i]);
+        // printf("intoarr \n");
+        // printf("%f \n", (double) arr[i]);
     }
 
     printf("input arr ready\n");
