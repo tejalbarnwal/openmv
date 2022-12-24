@@ -428,7 +428,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
 
     printf("model read!\n");
 
-    float arr[36];
+    float arr[arg_list->len];
     mp_obj_list_t *arg_list = args[1];
     for(size_t i =0; i < arg_list->len; i++){
         // printf("original \n");
