@@ -442,7 +442,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     mp_obj_array_t *arg_array = args[1];
     float arr[arg_array->len];
     for(size_t i =0; i < arg_array->len; i++){
-        arr[i] = mp_binary_get_val_array(arg_array->typecode, arg_array->items, i);
+        arr[i] = (float) mp_obj_float_get(mp_binary_get_val_array(arg_array->typecode, arg_array->items, i));
     }
     printf("arr created from list");
     
