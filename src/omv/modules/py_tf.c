@@ -156,14 +156,20 @@ static const mp_obj_type_t py_tf_model_type;
 
 STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_mode)
 {
+    printf("1\n");
+
     if (!helper_mode) {
         fb_alloc_mark();
     }
+
+    printf("2\n");
 
     const char *path = mp_obj_str_get_str(path_obj);
     py_tf_model_obj_t *tf_model = m_new_obj(py_tf_model_obj_t);
     tf_model->base.type = &py_tf_model_type;
     tf_model->model_data = NULL;
+
+    printf("3\n");
 
     for (int i=0; i<MP_ARRAY_SIZE(libtf_builtin_models); i++) {
         const libtf_builtin_model_t *model = &libtf_builtin_models[i];
@@ -172,6 +178,8 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
             tf_model->model_data_len = model->size;
         }
     }
+
+    printf("4\n");
 
     if (tf_model->model_data == NULL) {
         #if defined(IMLIB_ENABLE_IMAGE_FILE_IO)
@@ -188,23 +196,41 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
         #endif
     }
 
+    printf("5\n");
+
+
     if (!helper_mode) {
         py_tf_alloc_putchar_buffer();
     }
 
+    printf("6\n");
+
+
     uint32_t tensor_arena_size;
     uint8_t *tensor_arena = fb_alloc_all(&tensor_arena_size, FB_ALLOC_PREFER_SIZE);
+
+    printf("7\n");
+
 
     if (libtf_get_parameters(tf_model->model_data, tensor_arena, tensor_arena_size, &tf_model->params) != 0) {
         // Note can't use MP_ERROR_TEXT here...
         mp_raise_msg(&mp_type_OSError, (mp_rom_error_text_t) py_tf_putchar_buffer);
     }
 
+    printf("8\n");
+
+
     fb_free(); // free fb_alloc_all()
+
+    printf("9\n");
+
 
     if (!helper_mode) {
         fb_free(); // free py_tf_alloc_putchar_buffer()
     }
+
+    printf("10\n");
+
 
     // In this mode we leave the model allocated on the frame buffer.
     // py_tf_free_from_fb() must be called to free the model allocated on the frame buffer.
@@ -215,6 +241,8 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
     } else if ((!helper_mode) && alloc_mode) {
         fb_alloc_mark_permanent(); // tf_model->model_data will not be popped on exception.
     }
+
+    printf("11\n");
 
     return tf_model;
 }
@@ -232,6 +260,8 @@ STATIC mp_obj_t py_tf_load_builtin_model(mp_obj_t path_obj)
     const char *path = mp_obj_str_get_str(path_obj);
     mp_obj_t labels = mp_obj_new_list(0, NULL);
 
+    printf("12\n");
+
     for (int i=0; i<MP_ARRAY_SIZE(libtf_builtin_models); i++) {
         const libtf_builtin_model_t *model = &libtf_builtin_models[i];
         if (!strcmp(path, model->name)) {
@@ -242,6 +272,7 @@ STATIC mp_obj_t py_tf_load_builtin_model(mp_obj_t path_obj)
             break;
         }
     }
+    printf("13\n");
     return mp_obj_new_tuple(2, (mp_obj_t []) {labels, net});
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(py_tf_load_builtin_model_obj, py_tf_load_builtin_model);
