@@ -156,20 +156,14 @@ static const mp_obj_type_t py_tf_model_type;
 
 STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_mode)
 {
-    printf("1\n");
-
     if (!helper_mode) {
         fb_alloc_mark();
     }
-
-    printf("2\n");
 
     const char *path = mp_obj_str_get_str(path_obj);
     py_tf_model_obj_t *tf_model = m_new_obj(py_tf_model_obj_t);
     tf_model->base.type = &py_tf_model_type;
     tf_model->model_data = NULL;
-
-    printf("3\n");
 
     for (int i=0; i<MP_ARRAY_SIZE(libtf_builtin_models); i++) {
         const libtf_builtin_model_t *model = &libtf_builtin_models[i];
@@ -178,8 +172,6 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
             tf_model->model_data_len = model->size;
         }
     }
-
-    printf("4\n");
 
     if (tf_model->model_data == NULL) {
         #if defined(IMLIB_ENABLE_IMAGE_FILE_IO)
@@ -196,41 +188,23 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
         #endif
     }
 
-    printf("5\n");
-
-
     if (!helper_mode) {
         py_tf_alloc_putchar_buffer();
     }
 
-    printf("6\n");
-
-
     uint32_t tensor_arena_size;
     uint8_t *tensor_arena = fb_alloc_all(&tensor_arena_size, FB_ALLOC_PREFER_SIZE);
-
-    printf("7\n");
-
 
     if (libtf_get_parameters(tf_model->model_data, tensor_arena, tensor_arena_size, &tf_model->params) != 0) {
         // Note can't use MP_ERROR_TEXT here...
         mp_raise_msg(&mp_type_OSError, (mp_rom_error_text_t) py_tf_putchar_buffer);
     }
 
-    printf("8\n");
-
-
     fb_free(); // free fb_alloc_all()
-
-    printf("9\n");
-
 
     if (!helper_mode) {
         fb_free(); // free py_tf_alloc_putchar_buffer()
     }
-
-    printf("10\n");
-
 
     // In this mode we leave the model allocated on the frame buffer.
     // py_tf_free_from_fb() must be called to free the model allocated on the frame buffer.
@@ -241,8 +215,6 @@ STATIC mp_obj_t int_py_tf_load(mp_obj_t path_obj, bool alloc_mode, bool helper_m
     } else if ((!helper_mode) && alloc_mode) {
         fb_alloc_mark_permanent(); // tf_model->model_data will not be popped on exception.
     }
-
-    printf("11\n");
 
     return tf_model;
 }
@@ -260,8 +232,6 @@ STATIC mp_obj_t py_tf_load_builtin_model(mp_obj_t path_obj)
     const char *path = mp_obj_str_get_str(path_obj);
     mp_obj_t labels = mp_obj_new_list(0, NULL);
 
-    printf("12\n");
-
     for (int i=0; i<MP_ARRAY_SIZE(libtf_builtin_models); i++) {
         const libtf_builtin_model_t *model = &libtf_builtin_models[i];
         if (!strcmp(path, model->name)) {
@@ -272,7 +242,6 @@ STATIC mp_obj_t py_tf_load_builtin_model(mp_obj_t path_obj)
             break;
         }
     }
-    printf("13\n");
     return mp_obj_new_tuple(2, (mp_obj_t []) {labels, net});
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(py_tf_load_builtin_model_obj, py_tf_load_builtin_model);
@@ -297,143 +266,6 @@ STATIC py_tf_model_obj_t *py_tf_load_alloc(mp_obj_t path_obj)
 // Author: teju
 // regression start
 
-// define regression input type as list (currently only accepting 1D input)
-// typedef struct py_tf_regression_input_data_callback_data{
-//     mp_obj_list_t *input_list;
-// } py_tf_regression_input_data_callback_data_t;
-
-// STATIC void py_tf_regression_input_callback(void *callback_data,
-//                                             void *model_input,
-//                                             libtf_parameters_t *params)
-// {
-//     py_tf_regression_input_data_callback_data_t *arg = (py_tf_regression_input_data_callback_data_t *) callback_data;
-
-//     int size = (params->input_width * params->input_height);
-//     // int hi = arg->input_list->len;
-//     printf("size of the input: %d \n", size);
-
-//     if(params->input_channels == 1) {
-//         if (params->input_datatype == LIBTF_DATATYPE_INT8) {
-
-//             float *model_input_i64 = (float *) model_input;
-//             float input_scale = params->input_scale;
-//             int input_zero_point = params->input_zero_point;
-
-//             printf("input values in the callback: \t");
-//             for(int i = 0; i < size; i +=1){
-//                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
-//                 printf( "%d \n", (int)temp);
-//             }
-//             printf("\n");
-
-//             printf("input values in the callback with scaling and zero point: \t");
-//             for(int i = 0; i < size; i +=1){
-//                 // float temp = (float)(arg->input_list->items[size]);
-//                 mp_float_t temp = mp_obj_float_get(arg->input_list->items[i]);
-//                 // printf( "%d \n", (int)temp);
-//                 printf( "%d \n", (int)((temp / input_scale) + input_zero_point) );
-//                 model_input_i64[i] = (temp / input_scale) + input_zero_point;
-//             }
-//             printf("\n");
-//             printf( "model input i64: %d \n", (int)model_input_i64[0]);
-//             printf( "model input: %.1f \n", (double)(((float *)model_input)[0]));
-//             // printf("input values in the model input: \t");
-//             // for(int i = 0; i < size; i +=1){
-//             //     mp_float_t temp = mp_obj_float_get(model_input_i64[i]);
-//             //     printf( "%d \n", (int)temp );
-//             // }
-//             printf("\n");
-//         }
-//     }
-// }
-
-
-// typedef struct py_tf_regression_output_data_callback_data{
-//     mp_obj_t out;
-// } py_tf_regression_output_data_callback_data_t;
-
-
-// STATIC void py_tf_regression_output_callback(void *callback_data,
-//                                             void *model_output,
-//                                             libtf_parameters_t *params)
-// {
-//     py_tf_regression_output_data_callback_data_t *arg = (py_tf_regression_output_data_callback_data_t *) callback_data;
-
-//     if (params->output_height != 1) {
-//         mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Expected model output height to be 1!"));
-//     }
-
-//     if (params->output_width != 1) {
-//         mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Expected model output width to be 1!"));
-//     }
-
-//     arg->out = mp_obj_new_list(params->output_channels, NULL);
-
-//     if (params->output_datatype == LIBTF_DATATYPE_INT8) {
-//         for (int i = 0, ii = params->output_channels; i < ii; i++) {
-
-//             mp_float_t temp = (float) (((float *) model_output)[i]);
-//             printf( "raw output %.1f \n", (double)temp);
-//             mp_float_t up_temp = (float) ( (temp - params->output_zero_point) * params->output_scale);
-//             printf( "scaled zeroed output %.1f \n", (double)up_temp);
-
-//             ((mp_obj_list_t *) arg->out)->items[i] =
-//                     mp_obj_new_float( ((float) (((int8_t *) model_output)[i] - params->output_zero_point)) * params->output_scale);
-//         }
-//     }
-
-// }
-
-
-// STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
-// {
-//     fb_alloc_mark();
-//     py_tf_alloc_putchar_buffer();
-
-//     py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
-
-//     printf("read oth arg \n");
-
-//     printf("printing arg 1: \t");
-//     printf("%d \n", (int)mp_obj_float_get(args[1]));
-
-//     mp_obj_list_t *arg_list = args[2];
-//     printf("read into arg list from arg 2: \t");
-//     for (size_t i = 0; i < arg_list->len; i++) {
-//         printf( "%d \t", (int) mp_obj_float_get(arg_list->items[i]));
-//     }
-//     printf("\n");
-
-//     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
-
-//     mp_obj_t output_list = mp_obj_new_list(0, NULL);
-
-//     py_tf_regression_input_data_callback_data_t py_tf_regression_input_data;
-//     py_tf_regression_input_data.input_list = arg_list;
-
-//     py_tf_regression_output_data_callback_data_t py_tf_regression_output_data;
-
-//     if (libtf_invoke(arg_model->model_data,
-//                             tensor_arena,
-//                             &arg_model->params,
-//                             py_tf_regression_input_callback,
-//                             &py_tf_regression_input_data,
-//                             py_tf_regression_output_callback,
-//                             &py_tf_regression_output_data) != 0) {
-//                         // Note can't use MP_ERROR_TEXT here.
-//         mp_raise_msg(&mp_type_OSError, (mp_rom_error_text_t) py_tf_putchar_buffer);
-//     }
-
-//     output_list = py_tf_regression_output_data.out;
-
-//     fb_alloc_free_till_mark();
-//     return output_list;
-// }
-// STATIC MP_DEFINE_CONST_FUN_OBJ_KW(py_tf_regression_obj, 2, py_tf_regression);
-
-// // regression end
-
-// small test start
 
 STATIC mp_obj_t py_tf_teju(uint n_args, const mp_obj_t *args, mp_map_t *kw_args)
 {   
@@ -484,7 +316,8 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     float output_data[output_size];
 
     if (libtf_tejuinput(arg_model->model_data, tensor_arena, &arg_model->params, input_array, output_data) != 0){
-        printf("somethings fishy\n");
+        // printf("somethings fishy\n");
+        mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("Coundnt execute the model to predict the output"));
     }
 
     mp_obj_list_t * out = (mp_obj_list_t *) mp_obj_new_list(output_size, NULL);
