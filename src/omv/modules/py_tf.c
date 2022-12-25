@@ -430,41 +430,37 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
 
     py_tf_model_obj_t *arg_model = py_tf_load_alloc(args[0]);
 
-    printf("model read!\n");
+    // printf("model data read!\n");
 
-    
-    // mp_obj_list_t *arg_list = args[1];
-    // float arr[arg_list->len];
-    // for(size_t i =0; i < arg_list->len; i++){
-    //     arr[i] = (float) mp_obj_float_get(arg_list->items[i]);
-    // }
+    size_t input_size = &arg_model->params->input_width;
+    size_t output_size = &arg_model->params->output_channels;
 
-    mp_obj_array_t *arg_array = args[1];
-    float arr[arg_array->len];
-    for(size_t i =0; i < arg_array->len; i++){
-        arr[i] = (float) mp_obj_float_get(mp_binary_get_val_array(arg_array->typecode, arg_array->items, i));
+    mp_obj_array_t *arg_input_array = args[1];
+
+    if (input_size != arg_input_array->len) {
+        mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Input array size is not same as model input size!"));
     }
-    printf("arr created from list");
+
+    float input_array[input_size];
+    for(size_t i =0; i < input_size; i++){
+        input_array[i] = (float) mp_obj_float_get(mp_binary_get_val_array(arg_input_array->typecode, arg_input_array->items, i));
+    }
+    // printf("array created from argument");
     
-
-
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
-
-    printf("input arr ready\n");
-
-    int output_size = 1;
 
     float output_data[output_size];
 
-    if (libtf_tejuinput(arg_model->model_data, arr, arg_array->len, tensor_arena, &arg_model->params, output_data, output_size) != 0){
+    if (libtf_tejuinput(arg_model->model_data, tensor_arena, &arg_model->params, input_array, output_data) != 0){
         printf("somethings fishy\n");
     }
 
-    for(int j=0; j<(output_size); j++) {
-        printf("%f \n", (double) output_data[j]);
+    mp_obj_t out = mp_obj_new_list(0, NULL);
+    for(size_t j=0; j<(output_size); j++) {
+        // printf("%f \n", (double) output_data[j]);
+        out->items[i] = mp_obj_new_float(output_data[j]);
     }
 
-    mp_obj_t out = mp_obj_new_list(0, NULL);
     fb_alloc_free_till_mark();
     return out;
 
