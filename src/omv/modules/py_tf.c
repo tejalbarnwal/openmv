@@ -432,8 +432,8 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
 
     // printf("model data read!\n");
 
-    size_t input_size = &arg_model->params->input_width;
-    size_t output_size = &arg_model->params->output_channels;
+    size_t input_size = (&arg_model->params).input_width;
+    size_t output_size = (&arg_model->params).output_channels;
 
     mp_obj_array_t *arg_input_array = args[1];
 
@@ -458,7 +458,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     mp_obj_t out = mp_obj_new_list(0, NULL);
     for(size_t j=0; j<(output_size); j++) {
         // printf("%f \n", (double) output_data[j]);
-        out->items[i] = mp_obj_new_float(output_data[j]);
+        out->items[j] = mp_obj_new_float(output_data[j]);
     }
 
     fb_alloc_free_till_mark();
