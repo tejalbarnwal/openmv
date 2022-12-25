@@ -452,15 +452,15 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
 
     printf("input arr ready\n");
 
-    int output_size = *(args[2]);
+    int *output_size = args[2];
 
     float output_data[*output_size];
 
-    if (libtf_tejuinput(arg_model->model_data, arr, arg_array->len, tensor_arena, &arg_model->params, output_data, output_size) != 0){
+    if (libtf_tejuinput(arg_model->model_data, arr, arg_array->len, tensor_arena, &arg_model->params, output_data, *output_size) != 0){
         printf("somethings fishy\n");
     }
 
-    for(int j=0; j<output_size; j++) {
+    for(int j=0; j<(*output_size); j++) {
         printf("%d \n", (double) output_data[j]);
     }
 
