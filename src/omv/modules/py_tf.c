@@ -455,11 +455,11 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
         printf("somethings fishy\n");
     }
 
-    mp_obj_t out = mp_obj_new_list(output_size, NULL);
+    mp_obj_list_t * out = (mp_obj_list_t *) mp_obj_new_list(output_size, NULL);
     for(size_t j=0; j<(output_size); j++) {
         // printf("%f \n", (double) output_data[j]);
-        ((mp_obj_list_t *) out)->items[j] = mp_obj_new_float(output_data[j]);
-        printf("%f \n", (double) mp_obj_float_get((mp_obj_list_t *) out)->items[j]);
+        out->items[j] = mp_obj_new_float(output_data[j]);
+        printf("%f \n", (double) mp_obj_float_get(out->items[j]));
     }
 
     fb_alloc_free_till_mark();
