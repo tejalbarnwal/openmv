@@ -461,7 +461,7 @@ STATIC mp_obj_t py_tf_tejuinput(uint n_args, const mp_obj_t *args, mp_map_t *kw_
     }
 
     for(int j=0; j<(*output_size); j++) {
-        printf("%d \n", (double) output_data[j]);
+        printf("%f \n", (double) output_data[j]);
     }
 
     mp_obj_t out = mp_obj_new_list(0, NULL);
