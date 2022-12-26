@@ -873,7 +873,7 @@ STATIC const mp_rom_map_elem_t globals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_classify),                MP_ROM_PTR(&py_func_unavailable_obj) },
     { MP_ROM_QSTR(MP_QSTR_segment),                 MP_ROM_PTR(&py_func_unavailable_obj) },
     { MP_ROM_QSTR(MP_QSTR_detect),                  MP_ROM_PTR(&py_func_unavailable_obj) },
-    { MP_ROM_QSTR(MP_QSTR_regression_1Din_1Dout),   MP_ROM_PTR(&py_tf_regression_1Din_1Dout_obj) }
+    { MP_ROM_QSTR(MP_QSTR_regression_1Din_1Dout),   MP_ROM_PTR(&py_func_unavailable_obj) }
 #endif // IMLIB_ENABLE_TF
 };
 
