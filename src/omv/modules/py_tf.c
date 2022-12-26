@@ -280,7 +280,7 @@ STATIC mp_obj_t py_tf_regression_1Din_1Dout(uint n_args, const mp_obj_t *args, m
     float input_array[input_size];
     for(size_t i =0; i < input_size; i++){
         input_array[i] = (float) mp_obj_float_get(mp_binary_get_val_array(arg_input_array->typecode, arg_input_array->items, i));
-        printf("%f \n", (double) input_array[i]);
+        // printf("%f \n", (double) input_array[i]);
     }
     
     uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
