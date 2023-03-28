@@ -429,6 +429,7 @@ static void py_winc_socket_close(mod_network_socket_obj_t *socket)
         socket->fileno = -1; // Mark socket FD as invalid
         m_del(winc_socket_buf_t, socket->_private, 1);
         socket->_private = NULL;
+        socket->nic = MP_OBJ_NULL;
     }
 }
 
@@ -465,7 +466,9 @@ static int py_winc_socket_accept(mod_network_socket_obj_t *socket,
     int ret = winc_socket_accept(socket->fileno, &addr, &fd, socket->timeout);
     if (ret < 0) {
         *_errno = py_winc_mperrno(ret);
-        py_winc_socket_close(socket);
+        if (ret != SOCK_ERR_TIMEOUT) {
+            py_winc_socket_close(socket);
+        }
         return -1;
     }
 
