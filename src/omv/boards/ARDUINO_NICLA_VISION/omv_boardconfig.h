@@ -143,13 +143,11 @@
 #define OMV_JPEG_MEMORY         SRAM3       // JPEG buffer memory buffer.
 #define OMV_VOSPI_MEMORY        SRAM4       // VoSPI frame buffer memory.
 #define OMV_VOSPI_MEMORY_OFFSET (20K)       // SRAM4 reserves 16K for CM4 + 4K D3 DMA buffers.
-#define OMV_CYW43_MEMORY        FLASH_EXT   // CYW43 firmware in external flash mmap'd flash.
-#define OMV_CYW43_MEMORY_OFFSET (0x90F00000)// Last Mbyte.
 
 #define OMV_FB_SIZE             (400K)      // FB memory: header + VGA/GS image
 #define OMV_FB_ALLOC_SIZE       (100K)      // minimum fb alloc size
 #define OMV_STACK_SIZE          (64K)
-#define OMV_HEAP_SIZE           (183K)
+#define OMV_HEAP_SIZE           (182K)
 
 #define OMV_LINE_BUF_SIZE       (3 * 1024)  // Image line buffer round(640 * 2BPP * 2 buffers).
 #define OMV_MSC_BUF_SIZE        (2K)        // USB MSC bot data

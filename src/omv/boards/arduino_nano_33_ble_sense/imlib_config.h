@@ -15,7 +15,8 @@
 #define IMLIB_ENABLE_IMAGE_IO
 
 // Enable Image File I/O
-#define IMLIB_ENABLE_IMAGE_FILE_IO
+// Not filesystem yet
+//#define IMLIB_ENABLE_IMAGE_FILE_IO
 
 // Enable LAB LUT
 //#define IMLIB_ENABLE_LAB_LUT
@@ -24,40 +25,43 @@
 //#define IMLIB_ENABLE_YUV_LUT
 
 // Enable mean pooling
-#define IMLIB_ENABLE_MEAN_POOLING
+//#define IMLIB_ENABLE_MEAN_POOLING
 
 // Enable midpoint pooling
-#define IMLIB_ENABLE_MIDPOINT_POOLING
+//#define IMLIB_ENABLE_MIDPOINT_POOLING
+
+// Enable ISP ops
+//#define IMLIB_ENABLE_ISP_OPS
 
 // Enable binary ops
-#define IMLIB_ENABLE_BINARY_OPS
+//#define IMLIB_ENABLE_BINARY_OPS
 
 // Enable math ops
-#define IMLIB_ENABLE_MATH_OPS
+//#define IMLIB_ENABLE_MATH_OPS
 
 // Enable flood_fill()
-#define IMLIB_ENABLE_FLOOD_FILL
+//#define IMLIB_ENABLE_FLOOD_FILL
 
 // Enable mean()
-#define IMLIB_ENABLE_MEAN
+//#define IMLIB_ENABLE_MEAN
 
 // Enable median()
-#define IMLIB_ENABLE_MEDIAN
+//#define IMLIB_ENABLE_MEDIAN
 
 // Enable mode()
-#define IMLIB_ENABLE_MODE
+//#define IMLIB_ENABLE_MODE
 
 // Enable midpoint()
-#define IMLIB_ENABLE_MIDPOINT
+//#define IMLIB_ENABLE_MIDPOINT
 
 // Enable morph()
-#define IMLIB_ENABLE_MORPH
+//#define IMLIB_ENABLE_MORPH
 
 // Enable Gaussian
-#define IMLIB_ENABLE_GAUSSIAN
+//#define IMLIB_ENABLE_GAUSSIAN
 
 // Enable Laplacian
-#define IMLIB_ENABLE_LAPLACIAN
+//#define IMLIB_ENABLE_LAPLACIAN
 
 // Enable bilateral()
 //#define IMLIB_ENABLE_BILATERAL
@@ -66,42 +70,42 @@
 // #define IMLIB_ENABLE_CARTOON
 
 // Enable linpolar()
-#define IMLIB_ENABLE_LINPOLAR
+//#define IMLIB_ENABLE_LINPOLAR
 
 // Enable logpolar()
-#define IMLIB_ENABLE_LOGPOLAR
+//#define IMLIB_ENABLE_LOGPOLAR
 
 // Enable lens_corr()
-#define IMLIB_ENABLE_LENS_CORR
+//#define IMLIB_ENABLE_LENS_CORR
 
 // Enable rotation_corr()
-#define IMLIB_ENABLE_ROTATION_CORR
+//#define IMLIB_ENABLE_ROTATION_CORR
 
 // Enable phasecorrelate()
-#if defined(IMLIB_ENABLE_ROTATION_CORR)
-#define IMLIB_ENABLE_FIND_DISPLACEMENT
-#endif
+//#if defined(IMLIB_ENABLE_ROTATION_CORR)
+//#define IMLIB_ENABLE_FIND_DISPLACEMENT
+//#endif
 
 // Enable get_similarity()
-#define IMLIB_ENABLE_GET_SIMILARITY
+//#define IMLIB_ENABLE_GET_SIMILARITY
 
 // Enable find_lines()
-#define IMLIB_ENABLE_FIND_LINES
+//#define IMLIB_ENABLE_FIND_LINES
 
 // Enable find_line_segments()
-#define IMLIB_ENABLE_FIND_LINE_SEGMENTS
+//#define IMLIB_ENABLE_FIND_LINE_SEGMENTS
 
 // Enable find_circles()
-#define IMLIB_ENABLE_FIND_CIRCLES
+//#define IMLIB_ENABLE_FIND_CIRCLES
 
 // Enable find_rects()
-#define IMLIB_ENABLE_FIND_RECTS
+//#define IMLIB_ENABLE_FIND_RECTS
 
 // Enable find_qrcodes() (14 KB)
-#define IMLIB_ENABLE_QRCODES
+//#define IMLIB_ENABLE_QRCODES
 
 // Enable find_apriltags() (64 KB)
-#define IMLIB_ENABLE_APRILTAGS
+//#define IMLIB_ENABLE_APRILTAGS
 
 // Enable fine find_apriltags() - (8-way connectivity versus 4-way connectivity)
 // #define IMLIB_ENABLE_FINE_APRILTAGS
@@ -113,7 +117,7 @@
 //#define IMLIB_ENABLE_DATAMATRICES
 
 // Enable find_barcodes() (42 KB)
-#define IMLIB_ENABLE_BARCODES
+//#define IMLIB_ENABLE_BARCODES
 
 // Enable CMSIS NN
 // #if !defined(CUBEAI)
@@ -122,23 +126,23 @@
 
 // Enable Tensor Flow
 #if !defined(CUBEAI)
-#define IMLIB_ENABLE_TF
+//#define IMLIB_ENABLE_TF
 #endif
 
 // Enable FAST (20+ KBs).
-//#define IMLIB_ENABLE_FAST
+// #define IMLIB_ENABLE_FAST
 
 // Enable find_template()
-#define IMLIB_FIND_TEMPLATE
+//#define IMLIB_FIND_TEMPLATE
 
 // Enable find_lbp()
 //#define IMLIB_ENABLE_FIND_LBP
 
 // Enable find_keypoints()
-#define IMLIB_ENABLE_FIND_KEYPOINTS
+//#define IMLIB_ENABLE_FIND_KEYPOINTS
 
 // Enable load, save and match descriptor
-#define IMLIB_ENABLE_DESCRIPTOR
+//#define IMLIB_ENABLE_DESCRIPTOR
 
 // Enable find_hog()
 //#define IMLIB_ENABLE_HOG
@@ -147,11 +151,7 @@
 //#define IMLIB_ENABLE_SELECTIVE_SEARCH
 
 // Enable STM32 DMA2D
-#define IMLIB_ENABLE_DMA2D
-
-// Enable PNG encoder/decoder
-#define IMLIB_ENABLE_PNG_ENCODER
-#define IMLIB_ENABLE_PNG_DECODER
+//#define IMLIB_ENABLE_DMA2D
 
 // Stereo Imaging
 // #define IMLIB_ENABLE_STEREO_DISPARITY
