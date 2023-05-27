@@ -274,15 +274,15 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     size_t input_size_height = (&arg_model->params)->input_height;
     size_t output_size = (&arg_model->params)->output_channels;
 
-    printf("width of input np array = %u", *input_size_width);
-    printf("height of input np array = %u", *input_size_height);
-    printf("size of output array = %u", *output_size);
+    printf("width of input np array = %d", *input_size_width);
+    printf("height of input np array = %d", *input_size_height);
+    printf("size of output array = %d", *output_size);
 
     // read input
     ndarray_obj_t *arg_input_array = args[1];
 
-    printf("size of input np array = %u", arg_input_array->len);
-    printf("size of input np array = %u", arg_input_array->shape);
+    printf("size of input np array = %d", *arg_input_array->len);
+    printf("size of input np array = %d", *arg_input_array->shape);
 
     // check for the input size
     // if (input_size != arg_input_array->len) {
