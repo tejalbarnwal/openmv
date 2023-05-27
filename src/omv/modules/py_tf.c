@@ -299,28 +299,28 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
             printf("%f \n", (double) array[i * input_size_height + j]);
 
             input_array[i][j] = (double) array[i * input_size_height + j];
-            printf("---- the data stored to pass to the tf function ----");
+            printf("---- stored data ----");
             printf("At %u, %u \t :", i, j);
             printf("%f \n", (double) input_array[i][j]);
         }
         
     }
 
-    // uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
+    uint8_t *tensor_arena = fb_alloc(arg_model->params.tensor_arena_size, FB_ALLOC_PREFER_SPEED | FB_ALLOC_CACHE_ALIGN);
 
-    // float output_data[output_size];
+    float output_data[output_size];
 
     // predict the output using tflite model
-    // if (libtf_regression_1Dinput_1Doutput(arg_model->model_data,
-    //             tensor_arena, &arg_model->params, input_array, output_data) != 0){
-    //     mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("Coundnt execute the model to predict the output"));
-    // }
+    if (libtf_regression_1Dinput_1Doutput(arg_model->model_data,
+                tensor_arena, &arg_model->params, input_array, output_data) != 0){
+        mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("Coundnt execute the model to predict the output"));
+    }
 
     // read output
     mp_obj_list_t * out = (mp_obj_list_t *) mp_obj_new_list(output_size, NULL);
-    // for (size_t j=0; j<(output_size); j++) {
-    //     out->items[j] = mp_obj_new_float(output_data[j]);
-    // }
+    for (size_t j=0; j<(output_size); j++) {
+        out->items[j] = mp_obj_new_float(output_data[j]);
+    }
 
     fb_alloc_free_till_mark();
     return out;
