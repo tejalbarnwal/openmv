@@ -301,7 +301,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
             input_array[i][j] = (double) array[i * input_size_height + j];
             printf("---- the data stored to pass to the tf function ----");
             printf("At %u, %u \t :", i, j);
-            printf("%f \n", input_array[i][j]);
+            printf("%f \n", (double) input_array[i][j]);
         }
         
     }
