@@ -6,6 +6,7 @@ on:
       - 'v*.*.*'
     branches:    
       - 'master'
+      - 'regression_2d_input'
     paths:
       - 'src/**'
       - '.github/workflows/*.yml'
