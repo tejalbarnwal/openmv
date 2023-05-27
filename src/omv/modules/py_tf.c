@@ -296,12 +296,12 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
         {
             float *array = (float *)(arg_input_array->array);
             printf("At %u, %u \t :", i, j);
-            printf("%f \t", (double) array[i * input_size_height + j]);
+            printf("%f \t", (double) array[i * input_size_width + j]);
 
-            input_array[i * input_size_height + j] = (double) array[i * input_size_height + j];
+            input_array[i * input_size_width + j] = (double) array[i * input_size_width + j];
             // printf("---- stored data ----");
             printf(":::::: At %u, %u \t :", i, j);
-            printf("%f \n", (double) input_array[i * input_size_height + j]);
+            printf("%f \n", (double) input_array[i * input_size_width + j]);
         }
         
     }
