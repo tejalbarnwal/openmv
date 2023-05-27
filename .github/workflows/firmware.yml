@@ -8,6 +8,7 @@ on:
       - 'master'
       - 'regression_2d_input'
       - 'main'
+      
     paths:
       - 'src/**'
       - '.github/workflows/*.yml'
@@ -30,7 +31,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        target: [OPENMV2, OPENMV3, OPENMV4, OPENMV4P, OPENMV4_PRO, PORTENTA, OPENMVPT, NICLAV, NANO33, ARDUINO_NANO_RP2040_CONNECT]
+        target: [OPENMV2, OPENMV3, OPENMV4, OPENMV4P, ARDUINO_PORTENTA_H7, OPENMVPT, ARDUINO_NICLA_VISION, arduino_nano_33_ble_sense, ARDUINO_NANO_RP2040_CONNECT]
       fail-fast: false
     steps:
     - name: '⏳ Checkout repository'
@@ -42,7 +43,7 @@ jobs:
       run: source tools/ci.sh && ci_update_submodules
 
     - name: '♻ Caching dependencies'
-      uses: actions/cache@v3.2.3
+      uses: actions/cache@v3.3.1
       id: cache
       with:
         path: ~/cache/gcc
@@ -126,9 +127,9 @@ jobs:
 
     - name: '📦 Package firmware'
       run: source tools/ci.sh && ci_package_firmware_development
-
+      
     - name: '🧹 Delete old release'
-      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      uses: dev-drprasad/delete-tag-and-release@v0.2.1
       with:
         delete_release: true
         tag_name: development
