@@ -296,7 +296,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
         {
             float *array = (float *)(arg_input_array->array);
             printf("At %u, %u \t :", i, j);
-            printf("%f \n", (double) array[i]);
+            printf("%f \n", (double) array[i * input_size_height + j]);
             // input_array[i][j] = (float) mp_obj_float_get(
             //     mp_binary_get_val_array(arg_input_array->typecode, arg_input_array->items, i)
             //     );
