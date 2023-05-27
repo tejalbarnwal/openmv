@@ -281,7 +281,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     // read input
     ndarray_obj_t *arg_input_array = args[1];
 
-    printf("size of input np array = %u", (arg_input_array->len));
+    printf("size of input np array = %u \n", (arg_input_array->len));
     // printf("size of input np array = %u", *(arg_input_array->shape));
 
     // check for the input size
@@ -289,7 +289,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     //     mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Input array size is not same as model input size!"));
     // }
 
-    // float input_array[input_size_height][input_size_width];
+    float input_array[input_size_height][input_size_width];
 
     for (size_t i=0; i<input_size_height; i++) {
         for (size_t j=0; j<input_size_width; j++)
@@ -297,9 +297,11 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
             float *array = (float *)(arg_input_array->array);
             printf("At %u, %u \t :", i, j);
             printf("%f \n", (double) array[i * input_size_height + j]);
-            // input_array[i][j] = (float) mp_obj_float_get(
-            //     mp_binary_get_val_array(arg_input_array->typecode, arg_input_array->items, i)
-            //     );
+
+            input_array[i][j] = (float) mp_obj_float_get(array[i * input_size_height + j]);
+            printf("---- the data stored to pass to the tf function ----")
+            printf("At %u, %u \t :", i, j);
+            printf("%f \n", input_array[i][j]);
         }
         
     }
