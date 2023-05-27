@@ -289,7 +289,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     //     mp_raise_msg(&mp_type_ValueError, MP_ERROR_TEXT("Input array size is not same as model input size!"));
     // }
 
-    float input_array[input_size_height][input_size_width];
+    float input_array[input_size_height * input_size_width];
 
     for (size_t i=0; i<input_size_height; i++) {
         for (size_t j=0; j<input_size_width; j++)
@@ -298,10 +298,10 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
             printf("At %u, %u \t :", i, j);
             printf("%f \n", (double) array[i * input_size_height + j]);
 
-            input_array[i][j] = (double) array[i * input_size_height + j];
+            input_array[i * input_size_height + j] = (double) array[i * input_size_height + j];
             printf("---- stored data ----");
             printf("At %u, %u \t :", i, j);
-            printf("%f \n", (double) input_array[i][j]);
+            printf("%f \n", (double) input_array[i * input_size_height + j]);
         }
         
     }
