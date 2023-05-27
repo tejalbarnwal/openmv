@@ -19,6 +19,8 @@
 #include "py_helper.h"
 #include "imlib_config.h"
 
+#include "ulab/code/ulab.h"
+
 #ifdef IMLIB_ENABLE_TF
 #include "py_image.h"
 #include "ff_wrapper.h"
