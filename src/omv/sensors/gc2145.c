@@ -854,7 +854,7 @@ static int set_framesize(sensor_t *sensor, framesize_t framesize)
     uint16_t ratio = fast_floorf(IM_MIN(readout_w / ((float) w), readout_h / ((float) h)));
 
     // Limit the maximum amount of scaling allowed to keep the frame rate up.
-    ratio = IM_MIN(ratio, 3);
+    ratio = IM_MIN(ratio, 5);
 
     if (!(ratio % 2)) { // camera outputs messed up bayer images at even ratios for some reason...
         ratio -= 1;
