@@ -285,7 +285,7 @@ STATIC mp_obj_t py_tf_regression(uint n_args, const mp_obj_t *args, mp_map_t *kw
     float output_data[output_size];
 
     // predict the output using tflite model
-    if (libtf_regression_2Dinput_1Doutput(arg_model->model_data,
+    if (libtf_regression(arg_model->model_data,
                 tensor_arena, &arg_model->params, input_array, output_data) != 0){
         mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("Coundnt execute the model to predict the output"));
     }
